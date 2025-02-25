@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+    <style>
+        /* 清除默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 隐藏悬浮球 */
+        #position_demo {
+            display: none;
+        }
+
+        /* ChatBot容器样式 */
+        #chatBotContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; /* 默认宽度 */
+            max-width: 800px; /* 限制最大宽度 */
+            height: 90%; /* 默认高度 */
+            max-height: 700px; /* 限制最大高度 */
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            #chatBotContainer {
+                position: fixed;
+                top: 0;
+                left: 0;
+                transform: none; /* 移除居中转换 */
+                width: 100%; /* 占满屏幕宽度 */
+                height: 100%; /* 占满屏幕高度 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chatBotContainer"></div>
+    <script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.1.0-beta.0/libs/cn/index.js"></script>
+    <script>
+        // 检测是否为移动设备
+        const isMobile = window.innerWidth <= 768;
+
+        // 初始化 Coze Web SDK
+        const cozeWebSDK = new CozeWebSDK.WebChatClient({
+            // 配置项
+            config: {
+                bot_id: '7472640290869329955', // 替换为你的 bot_id
+            },
+            // UI 配置
+            ui: {
+                base: {
+                    icon: 'https://p1.ssl.qhimg.com/dr/270_500_/t01a8725fdfc8b703a4.jpg?size=310x310',
+                    layout: 'mobile',
+                    zIndex: 1000,
+                },
+                header:{
+                    isNeedClose: false,
+
+                },
+                asstBtn: {
+                    isNeed: true,
+                },
+                footer: {
+                    isShow: true,
+                    expressionText: '内容由AI生成，仅供参考'
+                },
+                chatBot: {
+                    title: "数据库系统小助手",
+                    uploadable: false,
+                    width: isMobile ? '100%' : 800, // 根据设备调整宽度
+                    height: isMobile ? '100%' : 700, // 根据设备调整高度
+                    onHide: () => {
+                        console.log('ChatBot隐藏了');
+                    },
+                    onShow: () => {
+                        console.log('ChatBot显示了');
+                    },
+                },
+            },
+        });
+
+        // 显示聊天框
+        cozeWebSDK.showChatBot();
+    </script>
+</body>
+</html>
